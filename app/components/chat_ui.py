@@ -151,37 +151,44 @@ def message_bubble(message: dict, index: int) -> rx.Component:
 def chat_input_area() -> rx.Component:
     return rx.el.form(
         rx.el.div(
-            rx.cond(
-                ChatState.is_recording,
-                rx.el.div(
-                    rx.el.span(
-                        "Listening...",
-                        class_name="text-[#B00020] font-medium mr-3 animate-pulse",
-                    ),
+            rx.el.div(
+                rx.cond(
+                    ChatState.is_recording,
                     rx.el.div(
-                        class_name="w-1 h-3 bg-[#B00020] mx-0.5 rounded-full animate-wave",
-                        style={"animation-delay": "0s"},
+                        rx.el.span(
+                            "Listening...",
+                            class_name="text-[#B00020] font-medium mr-3 animate-pulse",
+                        ),
+                        rx.el.div(
+                            class_name="w-1 h-3 bg-[#B00020] mx-0.5 rounded-full animate-wave",
+                            style={"animation-delay": "0s"},
+                        ),
+                        rx.el.div(
+                            class_name="w-1 h-5 bg-[#B00020] mx-0.5 rounded-full animate-wave",
+                            style={"animation-delay": "0.1s"},
+                        ),
+                        rx.el.div(
+                            class_name="w-1 h-3 bg-[#B00020] mx-0.5 rounded-full animate-wave",
+                            style={"animation-delay": "0.2s"},
+                        ),
+                        class_name=rx.cond(
+                            ChatState.dark_mode,
+                            "absolute inset-0 bg-[#2D2D2D]/95 z-10 flex items-center justify-center rounded-full backdrop-blur-sm border border-[#B00020]/20",
+                            "absolute inset-0 bg-white/95 z-10 flex items-center justify-center rounded-full backdrop-blur-sm border border-[#B00020]/20",
+                        ),
                     ),
-                    rx.el.div(
-                        class_name="w-1 h-5 bg-[#B00020] mx-0.5 rounded-full animate-wave",
-                        style={"animation-delay": "0.1s"},
-                    ),
-                    rx.el.div(
-                        class_name="w-1 h-3 bg-[#B00020] mx-0.5 rounded-full animate-wave",
-                        style={"animation-delay": "0.2s"},
-                    ),
-                    class_name="absolute inset-0 bg-white/95 z-10 flex items-center justify-center rounded-full backdrop-blur-sm border border-[#B00020]/20",
+                    rx.el.div(),
                 ),
-                rx.el.div(),
-            ),
-            rx.el.input(
-                placeholder="Ask anything...",
-                name="message",
-                class_name=rx.cond(
-                    ChatState.dark_mode,
-                    f"flex-1 bg-[#2D2D2D] border-none focus:ring-0 focus:outline-none text-gray-100 {TYPO_BODY_LARGE} px-4 py-3 rounded-full placeholder-gray-400",
-                    f"flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-gray-800 {TYPO_BODY_LARGE} px-4 py-3 rounded-full placeholder-gray-400",
+                rx.el.input(
+                    placeholder="Ask anything...",
+                    name="message",
+                    class_name=rx.cond(
+                        ChatState.dark_mode,
+                        f"w-full bg-[#2D2D2D] border-none focus:ring-0 focus:outline-none text-gray-100 {TYPO_BODY_LARGE} px-4 py-3 rounded-full placeholder-gray-400",
+                        f"w-full bg-transparent border-none focus:ring-0 focus:outline-none text-gray-800 {TYPO_BODY_LARGE} px-4 py-3 rounded-full placeholder-gray-400",
+                    ),
                 ),
+                class_name="flex-1 relative",
             ),
             rx.el.div(
                 rx.el.button(
