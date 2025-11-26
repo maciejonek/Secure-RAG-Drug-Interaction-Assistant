@@ -212,10 +212,16 @@ def chat_input_area() -> rx.Component:
                     title="Scan Barcode",
                     class_name="p-2 rounded-full hover:bg-gray-100 transition-colors",
                 ),
-                rx.el.button(
-                    rx.cond(
-                        ChatState.is_recording,
-                        rx.icon("mic-off", class_name="text-white", size=20),
+                rx.cond(
+                    ChatState.is_recording,
+                    rx.el.button(
+                        rx.icon("square", size=14, class_name="fill-current mr-2"),
+                        "Stop",
+                        on_click=ChatState.toggle_recording,
+                        type="button",
+                        class_name="flex items-center bg-[#B00020] text-white px-4 py-2 rounded-full hover:bg-[#d90026] transition-all animate-pulse-red ml-1 font-bold text-sm tracking-wide shadow-md",
+                    ),
+                    rx.el.button(
                         rx.icon(
                             "mic",
                             class_name=rx.cond(
@@ -225,13 +231,9 @@ def chat_input_area() -> rx.Component:
                             ),
                             size=20,
                         ),
-                    ),
-                    on_click=ChatState.toggle_recording,
-                    type="button",
-                    class_name=rx.cond(
-                        ChatState.is_recording,
-                        f"p-2 rounded-full bg-[#B00020] hover:bg-[#d90026] transition-colors ml-1 animate-pulse-red",
-                        f"p-2 rounded-full hover:bg-gray-100 transition-colors ml-1",
+                        on_click=ChatState.toggle_recording,
+                        type="button",
+                        class_name="p-2 rounded-full hover:bg-gray-100 transition-colors ml-1",
                     ),
                 ),
                 rx.el.button(
