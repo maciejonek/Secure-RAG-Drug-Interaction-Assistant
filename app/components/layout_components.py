@@ -27,6 +27,15 @@ def app_bar(
     return rx.el.header(
         rx.el.div(
             rx.el.div(
+                rx.el.button(
+                    rx.icon("menu", size=24),
+                    on_click=on_menu_click,
+                    class_name=rx.cond(
+                        ChatState.dark_mode,
+                        "mr-4 md:hidden text-gray-200",
+                        "mr-4 md:hidden text-gray-600",
+                    ),
+                ),
                 rx.el.h1(
                     title,
                     class_name=rx.cond(

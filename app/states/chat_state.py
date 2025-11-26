@@ -56,6 +56,10 @@ class ChatState(rx.State):
         },
     ]
 
+    @rx.var
+    def is_home_screen(self) -> bool:
+        return len(self.messages) <= 1
+
     @rx.event
     def toggle_sidebar(self):
         self.is_sidebar_open = not self.is_sidebar_open

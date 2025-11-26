@@ -148,7 +148,7 @@ def message_bubble(message: dict, index: int) -> rx.Component:
     )
 
 
-def chat_input_area() -> rx.Component:
+def chat_input_area(centered: bool = False) -> rx.Component:
     return rx.el.form(
         rx.el.div(
             rx.el.div(
@@ -259,8 +259,42 @@ def chat_input_area() -> rx.Component:
         on_submit=ChatState.handle_submit,
         reset_on_submit=True,
         class_name=rx.cond(
-            ChatState.dark_mode,
-            "w-full px-4 pb-8 pt-4 bg-gradient-to-t from-[#121212] via-[#121212] to-transparent sticky bottom-0",
-            f"w-full px-4 pb-8 pt-4 bg-gradient-to-t from-white via-white to-transparent sticky bottom-0",
+            centered,
+            "w-full px-4",
+            rx.cond(
+                ChatState.dark_mode,
+                "w-full px-4 pb-8 pt-4 bg-gradient-to-t from-[#121212] via-[#121212] to-transparent sticky bottom-0",
+                f"w-full px-4 pb-8 pt-4 bg-gradient-to-t from-white via-white to-transparent sticky bottom-0",
+            ),
         ),
+    )
+
+
+def landing_view() -> rx.Component:
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.icon(
+                    "message-circle-heart",
+                    size=48,
+                    class_name=rx.cond(
+                        ChatState.dark_mode,
+                        "text-white mb-4",
+                        f"text-[{TEAL_ACCENT}] mb-4",
+                    ),
+                ),
+                class_name="flex justify-center",
+            ),
+            rx.el.h1(
+                "Co dzisiaj chodzi Ci po głowie?",
+                class_name=rx.cond(
+                    ChatState.dark_mode,
+                    "text-3xl md:text-4xl font-semibold text-white text-center mb-8",
+                    "text-3xl md:text-4xl font-semibold text-gray-800 text-center mb-8",
+                ),
+            ),
+            chat_input_area(centered=True),
+            class_name="w-full max-w-3xl",
+        ),
+        class_name="flex flex-col items-center justify-center h-full w-full px-4",
     )

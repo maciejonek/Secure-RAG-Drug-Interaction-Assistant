@@ -160,13 +160,13 @@ def history_drawer() -> rx.Component:
             ChatState.is_sidebar_open,
             rx.cond(
                 ChatState.dark_mode,
-                f"w-[280px] bg-[#1E1E1E] h-full border-r border-white/10 shrink-0 transition-all duration-300 z-30 shadow-xl absolute left-[60px] top-0",
-                f"w-[280px] bg-white h-full border-r border-gray-100 shrink-0 transition-all duration-300 z-30 shadow-xl absolute left-[60px] top-0",
+                f"w-[280px] bg-[#1E1E1E] h-full border-r border-white/10 shrink-0 transition-all duration-300 z-50 shadow-xl fixed md:absolute left-0 md:left-[60px] top-0 bottom-0",
+                f"w-[280px] bg-white h-full border-r border-gray-100 shrink-0 transition-all duration-300 z-50 shadow-xl fixed md:absolute left-0 md:left-[60px] top-0 bottom-0",
             ),
             rx.cond(
                 ChatState.dark_mode,
-                "w-0 bg-[#1E1E1E] h-full border-none shrink-0 transition-all duration-300 overflow-hidden absolute left-[60px] top-0",
-                "w-0 bg-white h-full border-none shrink-0 transition-all duration-300 overflow-hidden absolute left-[60px] top-0",
+                "w-0 bg-[#1E1E1E] h-full border-none shrink-0 transition-all duration-300 overflow-hidden fixed md:absolute left-0 md:left-[60px] top-0 bottom-0",
+                "w-0 bg-white h-full border-none shrink-0 transition-all duration-300 overflow-hidden fixed md:absolute left-0 md:left-[60px] top-0 bottom-0",
             ),
         ),
     )
