@@ -43,7 +43,7 @@ class AuthState(rx.State):
             self.current_user = self.username
             self.auth_error = ""
             self.password = ""
-            return rx.redirect("/chat")
+            return rx.redirect("/")
         else:
             self.auth_error = "Invalid username or password."
 
@@ -68,7 +68,7 @@ class AuthState(rx.State):
         self.auth_error = ""
         self.password = ""
         self.confirm_password = ""
-        return rx.redirect("/chat")
+        return rx.redirect("/")
 
     @rx.event
     def logout(self):

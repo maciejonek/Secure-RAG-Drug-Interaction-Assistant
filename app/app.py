@@ -15,6 +15,6 @@ app = rx.App(
     ],
     stylesheets=["/animations.css"],
 )
-app.add_page(login_page, route="/")
+app.add_page(chat_page, route="/")
+app.add_page(login_page, route="/login")
 app.add_page(register_page, route="/register")
-app.add_page(chat_page, route="/chat", on_load=AuthState.check_login)

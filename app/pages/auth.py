@@ -174,7 +174,7 @@ def register_page() -> rx.Component:
                             ),
                             rx.el.a(
                                 "Login",
-                                href="/",
+                                href="/login",
                                 class_name=f"text-[{PRIMARY_COLOR}] font-semibold hover:underline cursor-pointer",
                             ),
                             class_name=f"mt-6 text-center {TYPO_BODY_MEDIUM}",

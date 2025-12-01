@@ -95,7 +95,7 @@ def app_bar(
                             "Log in",
                             class_name=f"bg-[{TEAL_ACCENT}] text-white text-sm px-4 py-2 rounded-full font-medium hover:opacity-90 transition-opacity",
                         ),
-                        href="/",
+                        href="/login",
                     ),
                 ),
                 class_name="flex items-center",
