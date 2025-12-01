@@ -298,3 +298,51 @@ def landing_view() -> rx.Component:
         ),
         class_name="flex flex-col items-center justify-center h-full w-full px-4",
     )
+
+
+def barcode_scanner_modal() -> rx.Component:
+    return rx.cond(
+        ChatState.is_barcode_modal_open,
+        rx.el.div(
+            rx.el.div(
+                class_name="fixed inset-0 bg-black/80 backdrop-blur-sm z-40",
+                on_click=ChatState.close_barcode_modal,
+            ),
+            rx.el.div(
+                rx.el.div(
+                    rx.el.h3(
+                        "Scan Medication Barcode",
+                        class_name="text-lg font-bold text-white mb-4",
+                    ),
+                    rx.el.div(
+                        rx.el.div(
+                            rx.el.div(
+                                class_name="absolute inset-0 border-2 border-white/50 rounded-lg m-8 z-10"
+                            ),
+                            rx.el.div(
+                                class_name=f"w-full h-0.5 bg-[{TEAL_ACCENT}] absolute top-1/2 left-0 animate-pulse z-20 shadow-[0_0_10px_rgba(108,155,170,0.8)]"
+                            ),
+                            rx.el.div(
+                                rx.icon("camera", size=48, class_name="text-white/20"),
+                                class_name="absolute inset-0 flex items-center justify-center",
+                            ),
+                            class_name="w-full h-64 bg-black rounded-lg relative overflow-hidden mb-6 ring-1 ring-white/10",
+                        ),
+                        rx.el.p(
+                            "Align the barcode within the frame to scan",
+                            class_name="text-gray-300 text-center mb-6 text-sm",
+                        ),
+                        rx.el.button(
+                            "Cancel",
+                            on_click=ChatState.close_barcode_modal,
+                            class_name="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-lg transition-colors font-medium",
+                        ),
+                        class_name="flex flex-col",
+                    ),
+                    class_name="bg-[#1E1E1E] p-6 rounded-2xl shadow-2xl w-full max-w-sm mx-4 border border-white/10 relative z-50",
+                ),
+                class_name="fixed inset-0 flex items-center justify-center z-50 px-4",
+            ),
+        ),
+        rx.el.div(),
+    )

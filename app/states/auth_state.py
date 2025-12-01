@@ -82,5 +82,4 @@ class AuthState(rx.State):
     @rx.event
     def check_login(self):
         """Checks if user is logged in on page load."""
-        if not self.is_authenticated:
-            return rx.redirect("/")
+        pass

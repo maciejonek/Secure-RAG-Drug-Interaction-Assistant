@@ -20,21 +20,24 @@ from app.states.chat_state import ChatState
 
 def app_bar(
     title: str,
-    show_logout: bool = False,
     on_menu_click: rx.event.EventType = None,
     on_medication_click: rx.event.EventType = None,
 ) -> rx.Component:
     return rx.el.header(
         rx.el.div(
             rx.el.div(
-                rx.el.button(
-                    rx.icon("menu", size=24),
-                    on_click=on_menu_click,
-                    class_name=rx.cond(
-                        ChatState.dark_mode,
-                        "mr-4 md:hidden text-gray-200",
-                        "mr-4 md:hidden text-gray-600",
+                rx.cond(
+                    AuthState.is_authenticated,
+                    rx.el.button(
+                        rx.icon("menu", size=24),
+                        on_click=on_menu_click,
+                        class_name=rx.cond(
+                            ChatState.dark_mode,
+                            "mr-4 md:hidden text-gray-200",
+                            "mr-4 md:hidden text-gray-600",
+                        ),
                     ),
+                    rx.el.div(),
                 ),
                 rx.el.h1(
                     title,
@@ -58,7 +61,7 @@ def app_bar(
                     class_name="p-2 rounded-full hover:bg-gray-200/50 dark:hover:bg-white/10 transition-colors mr-1",
                 ),
                 rx.cond(
-                    on_medication_click != None,
+                    AuthState.is_authenticated & (on_medication_click != None),
                     rx.el.button(
                         rx.icon(
                             "pill",
@@ -76,7 +79,7 @@ def app_bar(
                     rx.el.div(),
                 ),
                 rx.cond(
-                    show_logout,
+                    AuthState.is_authenticated,
                     rx.el.button(
                         rx.icon(
                             "log-out",
@@ -87,7 +90,13 @@ def app_bar(
                         title="Logout",
                         class_name="p-2 rounded-full hover:bg-gray-200/50 dark:hover:bg-white/10 transition-colors",
                     ),
-                    rx.el.div(),
+                    rx.el.a(
+                        rx.el.button(
+                            "Log in",
+                            class_name=f"bg-[{TEAL_ACCENT}] text-white text-sm px-4 py-2 rounded-full font-medium hover:opacity-90 transition-opacity",
+                        ),
+                        href="/",
+                    ),
                 ),
                 class_name="flex items-center",
             ),

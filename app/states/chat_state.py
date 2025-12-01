@@ -14,6 +14,7 @@ class ChatState(rx.State):
     is_scanning: bool = False
     playing_message_index: int = -1
     is_medication_sidebar_open: bool = False
+    is_barcode_modal_open: bool = False
     new_medication_input: str = ""
     dark_mode: bool = False
     current_medications: list[str] = [
@@ -99,11 +100,23 @@ class ChatState(rx.State):
         self.current_medications.remove(med)
 
     @rx.event
+    def show_barcode_modal(self):
+        self.is_barcode_modal_open = True
+        self.is_scanning = True
+
+    @rx.event
+    def close_barcode_modal(self):
+        self.is_barcode_modal_open = False
+        self.is_scanning = False
+
+    @rx.event
     async def scan_barcode(self):
+        self.is_barcode_modal_open = True
         self.is_scanning = True
         yield
         await asyncio.sleep(2.0)
         self.current_medications.append("Atorvastatin 20mg")
+        self.is_barcode_modal_open = False
         self.is_scanning = False
 
     @rx.event

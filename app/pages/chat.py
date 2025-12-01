@@ -2,7 +2,12 @@ import reflex as rx
 from app.states.auth_state import AuthState
 from app.states.chat_state import ChatState
 from app.components.layout_components import app_bar
-from app.components.chat_ui import message_bubble, chat_input_area, landing_view
+from app.components.chat_ui import (
+    message_bubble,
+    chat_input_area,
+    landing_view,
+    barcode_scanner_modal,
+)
 from app.components.sidebar import minimal_sidebar, history_drawer
 from app.components.medication_sidebar import medication_sidebar
 from app.utils.md3_styles import BACKGROUND_DARK, BACKGROUND_COLOR
@@ -10,18 +15,18 @@ from app.utils.md3_styles import BACKGROUND_DARK, BACKGROUND_COLOR
 
 def chat_page() -> rx.Component:
     return rx.el.div(
-        minimal_sidebar(),
+        barcode_scanner_modal(),
+        rx.cond(AuthState.is_authenticated, minimal_sidebar(), rx.el.div()),
         rx.el.div(
             app_bar(
                 "Medical Assistant",
-                show_logout=True,
                 on_menu_click=ChatState.toggle_sidebar,
                 on_medication_click=ChatState.toggle_medication_sidebar,
             ),
             rx.el.div(
-                history_drawer(),
+                rx.cond(AuthState.is_authenticated, history_drawer(), rx.el.div()),
                 rx.cond(
-                    ChatState.is_sidebar_open,
+                    ChatState.is_sidebar_open & AuthState.is_authenticated,
                     rx.el.div(
                         class_name="fixed inset-0 bg-black/50 z-40 md:hidden backdrop-blur-sm transition-opacity",
                         on_click=ChatState.close_sidebar,
@@ -69,14 +74,14 @@ def chat_page() -> rx.Component:
                     ),
                 ),
                 rx.cond(
-                    ChatState.is_medication_sidebar_open,
+                    ChatState.is_medication_sidebar_open & AuthState.is_authenticated,
                     rx.el.div(
                         class_name="absolute inset-0 bg-black/20 z-20 md:hidden backdrop-blur-sm transition-opacity",
                         on_click=ChatState.close_medication_sidebar,
                     ),
                     rx.el.div(),
                 ),
-                medication_sidebar(),
+                rx.cond(AuthState.is_authenticated, medication_sidebar(), rx.el.div()),
                 class_name="flex-1 flex overflow-hidden w-full relative",
             ),
             class_name="flex flex-col flex-1 h-screen overflow-hidden relative",
